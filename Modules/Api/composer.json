@@ -1,0 +1,15 @@
+{
+    "name": "nwidart/api",
+    "description": "",
+    "authors": [
+        {
+            "name": "xerxis",
+            "email": "kaixersoft@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Modules\\Api\\": ""
+        }
+    }
+}
