@@ -13,7 +13,6 @@ class TransactionCodeGenerator
             $code = 'W'.date('YmdHis');
             while(Transaction::where('transaction_code', $code)->first()) {
                 $code = 'W'.date('YmdHis');
-                logger($code);
             }
             return $code;
         } catch (UnsatisfiedDependencyException $e) {
