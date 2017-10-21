@@ -16,7 +16,7 @@ class CreateTransacationsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->unsignedInteger('user_id')->index();
+            $table->unsignedInteger('wallet_id')->index();
             $table->unsignedInteger('transaction_type_id')->index();
             $table->unsignedInteger('exchange_rate_id')->index();
             $table->decimal('amount', 30, 2);
@@ -27,8 +27,8 @@ class CreateTransacationsTable extends Migration
 
             $table->softDeletes();
 
-            $table->foreign('user_id')
-                ->references('id')->on('users')
+            $table->foreign('wallet_id')
+                ->references('id')->on('wallets')
                 ->onDelete('cascade');
 
             $table->engine = 'InnoDB';

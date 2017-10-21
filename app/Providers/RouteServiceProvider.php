@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\File;
+
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -35,11 +37,11 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        $this->mapApiRoutes();
+//        $this->mapApiRoutes();
+//
+//        $this->mapWebRoutes();
 
-        $this->mapWebRoutes();
-
-        //
+        $this->mapModuleRoutes();
     }
 
     /**
@@ -69,5 +71,15 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+    }
+
+    public function mapModuleRoutes()
+    {
+        if (!$this->app->routesAreCached() && is_dir(base_path('routes/modules'))) {
+            $routes = File::allFiles(base_path('routes/modules'));
+            foreach ($routes as $key => $route) {
+                require (string)$route;
+            }
+        }
     }
 }

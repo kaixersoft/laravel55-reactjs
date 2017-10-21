@@ -31,5 +31,8 @@ class UserTableSeeder extends Seeder
             'remember_token' => 'Zioj23D92j2kGf9D'
         ]);
 
+        // Dummy users
+        factory(User::class, 5)->create();
+
     }
 }

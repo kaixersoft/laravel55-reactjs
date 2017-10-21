@@ -1,5 +1,8 @@
 <?php
 
 return [
-    'name' => 'Api'
+    'name' => 'Api',
+    'bindings' => [
+        \Modules\Api\Contracts\WalletInterface::class => \Modules\Api\Services\WalletService::class
+    ]
 ];

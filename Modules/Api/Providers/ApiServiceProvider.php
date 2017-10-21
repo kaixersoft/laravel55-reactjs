@@ -26,6 +26,7 @@ class ApiServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->registerFactories();
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+        $this->registerBindings();
     }
 
     /**
@@ -108,5 +109,12 @@ class ApiServiceProvider extends ServiceProvider
     public function provides()
     {
         return [];
+    }
+
+    public function registerBindings()
+    {
+        foreach (config('api.bindings') as $key => $binding) {
+            $this->app->bind($key, $binding);
+        }
     }
 }

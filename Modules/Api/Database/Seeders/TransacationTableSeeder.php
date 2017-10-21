@@ -19,7 +19,7 @@ class TransacationTableSeeder extends Seeder
         Model::unguard();
 
         Transaction::create([
-           'user_id' => 1,
+           'wallet_id' => 1,
            'transaction_type_id' => 2,
             'exchange_rate_id' => 1,
             'amount' => 1000.00,
@@ -28,7 +28,7 @@ class TransacationTableSeeder extends Seeder
         ]);
 
         Transaction::create([
-            'user_id' => 1,
+            'wallet_id' => 1,
             'transaction_type_id' => 1,
             'exchange_rate_id' => 1,
             'amount' => 35.50,
@@ -38,7 +38,7 @@ class TransacationTableSeeder extends Seeder
 
 
         Transaction::create([
-            'user_id' => 1,
+            'wallet_id' => 1,
             'transaction_type_id' => 1,
             'exchange_rate_id' => 1,
             'amount' => 25.32,
@@ -47,7 +47,7 @@ class TransacationTableSeeder extends Seeder
         ]);
 
         Transaction::create([
-            'user_id' => 1,
+            'wallet_id' => 1,
             'transaction_type_id' => 2,
             'exchange_rate_id' => 1,
             'amount' => 5.00,
