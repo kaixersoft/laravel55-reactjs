@@ -31,6 +31,14 @@ class UserTableSeeder extends Seeder
             'remember_token' => 'Zioj23D92j2kGf9D'
         ]);
 
+        User::create([
+            'name' => 'xerxis',
+            'email' => 'xerxis@wallet.io',
+            'password' => bcrypt('secret'),
+            'remember_token' =>  str_random(10)
+        ]);
+
+
         // Dummy users
         factory(User::class, 5)->create();
 

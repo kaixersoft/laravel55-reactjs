@@ -116,7 +116,8 @@ class WalletService implements WalletInterface
               'transaction' => $transaction->transtype->name,
               'amount' => $transaction->amount,
               'currency' => $transaction->currency->currency,
-              'transaction_date' => $transaction->created_at->toDateTimeString()
+              'transaction_date' => $transaction->created_at->toDateTimeString(),
+              'remarks' => $transaction->remarks
             ];
         }
 
