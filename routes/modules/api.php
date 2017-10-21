@@ -8,8 +8,10 @@ Route::group(['middleware' => ['api'], 'namespace' => 'Modules\Api\Http\Controll
         Route::post('/wallet/delete', [  'as' => 'admin.wallet.delete', 'uses' => 'Admin\DeleteWallet' ] );
     });
 
-    Route::group([ 'prefix' => 'client' ], function () {
-//        Route::get('/wallet/create', [  'as' => 'admin.wallet.create', 'uses' => 'MakeWallet' ] );
+    Route::group([ 'prefix' => 'user' ], function () {
+        Route::post('/credit', [  'as' => 'user.wallet.credit', 'uses' => 'Client\Credit' ] );
+        Route::post('/debit', [  'as' => 'user.wallet.debit', 'uses' => 'Client\Debit' ] );
+        Route::get('/wallet', [  'as' => 'user.wallet', 'uses' => 'Client\GetWallet' ] );
     });
 
 
