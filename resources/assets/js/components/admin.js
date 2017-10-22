@@ -11,7 +11,8 @@ class Admin extends Component {
             transactions:[],
             newWalletEmail:'',
             deleteWalletEmail:'',
-            searchWalletEmail:''
+            searchWalletEmail:'',
+            notymessage:''
         };
 
         this.createWallet = this.createWallet.bind(this);
@@ -34,13 +35,23 @@ class Admin extends Component {
             }
         }
         axios.post('/admin/wallet/create', param, header ).then((response) => {
-
-            console.log(response);
-
             if (response.status === 200) {
-
+                this.showNoty(response.data.message);
             }
+        })
+        .catch(error => {
+
+            let res = error.response;
+            let data = error.response.data;
+            let message = 'something went wrong';
+
+            if (res.status === 422) message = data.errors.email;
+
+            if (res.status === 400) message = data.message;
+
+            this.showNoty(message);
         });
+
 
     }
 
@@ -58,13 +69,23 @@ class Admin extends Component {
             }
         }
         axios.post('/admin/wallet/delete', param, header ).then((response) => {
-
-            console.log(response);
-
             if (response.status === 200) {
-
+                this.showNoty(response.data.message);
             }
+        })
+        .catch(error => {
+
+            let res = error.response;
+            let data = error.response.data;
+            let message = 'something went wrong';
+
+            if (res.status === 422) message = data.errors.email;
+
+            if (res.status === 400) message = data.message;
+
+            this.showNoty(message);
         });
+
 
     }
 
@@ -97,9 +118,14 @@ class Admin extends Component {
                 });
             })
             .then(this.forceUpdate())
-            .catch((error) => {
-                console.log(error);
+            .catch(error => {
+                let res = error.response.data;
+                this.showNoty(res.errors.email);
             });
+    }
+
+    showNoty(message) {
+        alert(message);
     }
 
 

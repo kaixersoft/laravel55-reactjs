@@ -72,9 +72,10 @@ class Home extends Component {
                 });
             })
             .then(this.forceUpdate())
-            .catch((error) => {
-            console.log(error);
-        });
+            .catch(error => {
+                let res = error.response.data;
+                this.showNoty(res.errors.email);
+            });
     }
 
 
@@ -93,8 +94,22 @@ class Home extends Component {
         axios.post(uri, params).then((response) => {
             if (response.status === 200) {
                 _this.getUserWallet();
+                this.showNoty(response.data.message);
             }
+        })
+        .catch(error => {
+
+            let res = error.response;
+            let data = error.response.data;
+            let message = 'something went wrong';
+
+            if (res.status === 422) message = data.errors.amount;
+
+            if (res.status === 400) message = data.message;
+
+            this.showNoty(message);
         });
+
     }
 
     deductCredit() {
@@ -113,9 +128,28 @@ class Home extends Component {
         axios.post(uri, params).then((response) => {
             if (response.status === 200) {
                 _this.getUserWallet();
+                this.showNoty(response.data.message);
             }
+        })
+        .catch(error => {
+
+            let res = error.response;
+            let data = error.response.data;
+            let message = 'something went wrong';
+
+            if (res.status === 422) message = data.errors.amount;
+
+            if (res.status === 400) message = data.message;
+
+            this.showNoty(message);
         });
+
     }
+
+    showNoty(message) {
+        alert(message);
+    }
+
 
     render() {
         const self = this;

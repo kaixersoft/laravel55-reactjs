@@ -59353,12 +59353,14 @@ var Home = function (_Component) {
                     transactions: response.data.data.transactions
                 });
             }).then(this.forceUpdate()).catch(function (error) {
-                console.log(error);
+                var res = error.response.data;
+                _this4.showNoty(res.errors.email);
             });
         }
     }, {
         key: 'addCredit',
         value: function addCredit() {
+            var _this5 = this;
 
             var _this = this;
             var addValue = _this.state.addcredit;
@@ -59373,12 +59375,25 @@ var Home = function (_Component) {
             __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(uri, params).then(function (response) {
                 if (response.status === 200) {
                     _this.getUserWallet();
+                    _this5.showNoty(response.data.message);
                 }
+            }).catch(function (error) {
+
+                var res = error.response;
+                var data = error.response.data;
+                var message = 'something went wrong';
+
+                if (res.status === 422) message = data.errors.amount;
+
+                if (res.status === 400) message = data.message;
+
+                _this5.showNoty(message);
             });
         }
     }, {
         key: 'deductCredit',
         value: function deductCredit() {
+            var _this6 = this;
 
             var _this = this;
             var deductValue = _this.state.deductcredit;
@@ -59393,8 +59408,25 @@ var Home = function (_Component) {
             __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(uri, params).then(function (response) {
                 if (response.status === 200) {
                     _this.getUserWallet();
+                    _this6.showNoty(response.data.message);
                 }
+            }).catch(function (error) {
+
+                var res = error.response;
+                var data = error.response.data;
+                var message = 'something went wrong';
+
+                if (res.status === 422) message = data.errors.amount;
+
+                if (res.status === 400) message = data.message;
+
+                _this6.showNoty(message);
             });
+        }
+    }, {
+        key: 'showNoty',
+        value: function showNoty(message) {
+            alert(message);
         }
     }, {
         key: 'render',
@@ -59686,7 +59718,8 @@ var Admin = function (_Component) {
             transactions: [],
             newWalletEmail: '',
             deleteWalletEmail: '',
-            searchWalletEmail: ''
+            searchWalletEmail: '',
+            notymessage: ''
         };
 
         _this.createWallet = _this.createWallet.bind(_this);
@@ -59703,6 +59736,7 @@ var Admin = function (_Component) {
     _createClass(Admin, [{
         key: 'createWallet',
         value: function createWallet() {
+            var _this2 = this;
 
             var param = { 'email': this.state.newWalletEmail };
             var header = {
@@ -59711,10 +59745,20 @@ var Admin = function (_Component) {
                 }
             };
             axios.post('/admin/wallet/create', param, header).then(function (response) {
+                if (response.status === 200) {
+                    _this2.showNoty(response.data.message);
+                }
+            }).catch(function (error) {
 
-                console.log(response);
+                var res = error.response;
+                var data = error.response.data;
+                var message = 'something went wrong';
 
-                if (response.status === 200) {}
+                if (res.status === 422) message = data.errors.email;
+
+                if (res.status === 400) message = data.message;
+
+                _this2.showNoty(message);
             });
         }
     }, {
@@ -59725,6 +59769,7 @@ var Admin = function (_Component) {
     }, {
         key: 'deleteWallet',
         value: function deleteWallet() {
+            var _this3 = this;
 
             var param = { 'email': this.state.deleteWalletEmail };
             var header = {
@@ -59733,10 +59778,20 @@ var Admin = function (_Component) {
                 }
             };
             axios.post('/admin/wallet/delete', param, header).then(function (response) {
+                if (response.status === 200) {
+                    _this3.showNoty(response.data.message);
+                }
+            }).catch(function (error) {
 
-                console.log(response);
+                var res = error.response;
+                var data = error.response.data;
+                var message = 'something went wrong';
 
-                if (response.status === 200) {}
+                if (res.status === 422) message = data.errors.email;
+
+                if (res.status === 400) message = data.message;
+
+                _this3.showNoty(message);
             });
         }
     }, {
@@ -59757,7 +59812,7 @@ var Admin = function (_Component) {
     }, {
         key: 'getUserWallet',
         value: function getUserWallet() {
-            var _this2 = this;
+            var _this4 = this;
 
             var email = this.state.searchWalletEmail;
 
@@ -59767,13 +59822,19 @@ var Admin = function (_Component) {
                 }
             };
             axios.get('/admin/wallet/user?email=' + email, header).then(function (response) {
-                _this2.setState({
+                _this4.setState({
                     userinfo: response.data.data,
                     transactions: response.data.data.transactions
                 });
             }).then(this.forceUpdate()).catch(function (error) {
-                console.log(error);
+                var res = error.response.data;
+                _this4.showNoty(res.errors.email);
             });
+        }
+    }, {
+        key: 'showNoty',
+        value: function showNoty(message) {
+            alert(message);
         }
     }, {
         key: 'render',

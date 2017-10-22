@@ -80,6 +80,6 @@ class Handler extends ExceptionHandler
             }
         }
 
-        return response()->json(['message' => __('messages.validation errors'), 'errors' => $formatted_validation_errors], 422);
+        return response()->json(['message' => __('validation errors'), 'errors' => $formatted_validation_errors], 422);
     }
 }
