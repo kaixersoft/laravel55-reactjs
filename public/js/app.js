@@ -59676,30 +59676,368 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Admin = function (_Component) {
     _inherits(Admin, _Component);
 
-    function Admin() {
+    function Admin(props) {
         _classCallCheck(this, Admin);
 
-        return _possibleConstructorReturn(this, (Admin.__proto__ || Object.getPrototypeOf(Admin)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Admin.__proto__ || Object.getPrototypeOf(Admin)).call(this, props));
+
+        _this.state = {
+            userinfo: [],
+            transactions: [],
+            newWalletEmail: '',
+            deleteWalletEmail: '',
+            searchWalletEmail: ''
+        };
+
+        _this.createWallet = _this.createWallet.bind(_this);
+        _this.updateNewWalletEmail = _this.updateNewWalletEmail.bind(_this);
+
+        _this.deleteWallet = _this.deleteWallet.bind(_this);
+        _this.updateDeleteWalletEmail = _this.updateDeleteWalletEmail.bind(_this);
+
+        _this.searchWallet = _this.searchWallet.bind(_this);
+        _this.updateSearchWalletEmail = _this.updateSearchWalletEmail.bind(_this);
+        return _this;
     }
 
     _createClass(Admin, [{
-        key: "render",
+        key: 'createWallet',
+        value: function createWallet() {
+
+            var param = { 'email': this.state.newWalletEmail };
+            var header = {
+                'headers': {
+                    'x-auth-key': 'Zioj23D92j2kGf9D'
+                }
+            };
+            axios.post('/admin/wallet/create', param, header).then(function (response) {
+
+                console.log(response);
+
+                if (response.status === 200) {}
+            });
+        }
+    }, {
+        key: 'updateNewWalletEmail',
+        value: function updateNewWalletEmail(evt) {
+            this.state.newWalletEmail = evt.target.value;
+        }
+    }, {
+        key: 'deleteWallet',
+        value: function deleteWallet() {
+
+            var param = { 'email': this.state.deleteWalletEmail };
+            var header = {
+                'headers': {
+                    'x-auth-key': 'Zioj23D92j2kGf9D'
+                }
+            };
+            axios.post('/admin/wallet/delete', param, header).then(function (response) {
+
+                console.log(response);
+
+                if (response.status === 200) {}
+            });
+        }
+    }, {
+        key: 'updateDeleteWalletEmail',
+        value: function updateDeleteWalletEmail(evt) {
+            this.state.deleteWalletEmail = evt.target.value;
+        }
+    }, {
+        key: 'searchWallet',
+        value: function searchWallet() {
+            this.getUserWallet();
+        }
+    }, {
+        key: 'updateSearchWalletEmail',
+        value: function updateSearchWalletEmail(evt) {
+            this.state.searchWalletEmail = evt.target.value;
+        }
+    }, {
+        key: 'getUserWallet',
+        value: function getUserWallet() {
+            var _this2 = this;
+
+            var email = this.state.searchWalletEmail;
+
+            var header = {
+                'headers': {
+                    'x-auth-key': 'Zioj23D92j2kGf9D'
+                }
+            };
+            axios.get('/admin/wallet/user?email=' + email, header).then(function (response) {
+                _this2.setState({
+                    userinfo: response.data.data,
+                    transactions: response.data.data.transactions
+                });
+            }).then(this.forceUpdate()).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }, {
+        key: 'render',
         value: function render() {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "div",
-                { className: "row" },
+                'div',
+                { className: 'container' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "col-md-6" },
+                    'div',
+                    { className: 'row' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "h1",
+                        'h1',
                         null,
-                        "Admin Page"
+                        'Admin Page'
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "row" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "col-md-6" })
+                        'div',
+                        { className: 'col-md-12' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'col-md-6' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'form-group' },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { className: 'form-inline' },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'label',
+                                        { htmlFor: 'deductCredit' },
+                                        'New Wallet : '
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'div',
+                                        { className: 'input-group' },
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            'span',
+                                            { className: 'input-group-addon' },
+                                            'Email'
+                                        ),
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', className: 'form-control', id: 'newWalletEmail', onChange: this.updateNewWalletEmail })
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'button',
+                                        { type: 'button', className: 'btn btn-primary', onClick: this.createWallet, id: 'btnCreate' },
+                                        'Create Wallet'
+                                    )
+                                )
+                            )
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'col-md-6' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'form-group' },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { className: 'form-inline' },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'label',
+                                        { htmlFor: 'deductCredit' },
+                                        'Delete Wallet : '
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'div',
+                                        { className: 'input-group' },
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            'span',
+                                            { className: 'input-group-addon' },
+                                            'Email'
+                                        ),
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', className: 'form-control', id: 'deleteWalletEmail', onChange: this.updateDeleteWalletEmail })
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'button',
+                                        { type: 'button', className: 'btn btn-primary', onClick: this.deleteWallet, id: 'btnDelete' },
+                                        'Delete Wallet'
+                                    )
+                                )
+                            )
+                        )
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'row' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'form-inline' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'label',
+                                { htmlFor: 'deductCredit' },
+                                'Search Wallet : '
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'input-group' },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'span',
+                                    { className: 'input-group-addon' },
+                                    'Email'
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', className: 'form-control', id: 'searchWalletEmail', placeholder: 'xerxis@wallet.io', onChange: this.updateSearchWalletEmail })
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'button',
+                                { type: 'button', className: 'btn btn-primary', onClick: this.searchWallet, id: 'btnSearch' },
+                                'Search Wallet'
+                            )
+                        )
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'row' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'col-md-8' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'form-group' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'form-inline' },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'label',
+                                    { className: 'control-label col-md-4', htmlFor: 'email' },
+                                    'Email:'
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { className: 'col-md-4' },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'p',
+                                        { className: 'form-control-static' },
+                                        this.state.userinfo.email
+                                    )
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'label',
+                                    { className: 'control-label col-md-4', htmlFor: 'balance' },
+                                    'Balance:'
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { className: 'col-md-4' },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'p',
+                                        { className: 'form-control-static' },
+                                        '$ ',
+                                        this.state.userinfo.balance
+                                    )
+                                )
+                            )
+                        )
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'row' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'h3',
+                        null,
+                        'Transactions:'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'table-responsive' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'table',
+                            { className: 'table table-condensed ' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'thead',
+                                null,
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'tr',
+                                    null,
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'th',
+                                        { scope: 'col' },
+                                        '#'
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'th',
+                                        { scope: 'col' },
+                                        'Date'
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'th',
+                                        { scope: 'col' },
+                                        'Code'
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'th',
+                                        { scope: 'col' },
+                                        'Type'
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'th',
+                                        { scope: 'col' },
+                                        'Amount'
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'th',
+                                        { scope: 'col' },
+                                        'Currency'
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'th',
+                                        { scope: 'col' },
+                                        'Remarks'
+                                    )
+                                )
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'tbody',
+                                null,
+                                this.state.transactions.map(function (trans, index) {
+                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'tr',
+                                        null,
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            'td',
+                                            null,
+                                            index + 1
+                                        ),
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            'td',
+                                            null,
+                                            trans.transaction_date
+                                        ),
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            'td',
+                                            null,
+                                            trans.transaction_code
+                                        ),
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            'td',
+                                            null,
+                                            trans.transaction
+                                        ),
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            'td',
+                                            null,
+                                            trans.amount
+                                        ),
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            'td',
+                                            null,
+                                            trans.currency
+                                        ),
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            'td',
+                                            null,
+                                            trans.remarks
+                                        )
+                                    );
+                                })
+                            )
+                        )
                     )
                 )
             );
